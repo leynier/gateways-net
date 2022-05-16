@@ -1,13 +1,13 @@
 ﻿using Gateways.Business.Contracts;
-using Gateways.Business.Contracts.UseCases;
+using Gateways.Business.Contracts.Services;
 using System.Collections;
 using System.Linq.Expressions;
 
-namespace Gateways.Business.Implementations.UseCases;
+namespace Gateways.Business.Implementations.Services;
 
-public class BaseUseCase<TEntity> : IUseCase<TEntity> where TEntity : class
+public class BaseService<TEntity> : IService<TEntity> where TEntity : class
 {
-    public BaseUseCase(IRepository<TEntity> repository)
+    public BaseService(IRepository<TEntity> repository)
     {
         BaseRepository = repository;
     }

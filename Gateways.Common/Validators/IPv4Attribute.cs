@@ -11,7 +11,7 @@ public class IPv4Attribute : ValidationAttribute
             if (value == null)
                 return ValidationResult.Success;
             var errorResult = new ValidationResult("Value is not a valid IPv4");
-            if (!(value is string))
+            if (value is not string)
                 return errorResult;
             var data = (string)value;
             var dataSplited = data.Split(".");

@@ -1,6 +1,6 @@
-﻿namespace Gateways.Business.Contracts.UseCases;
+﻿namespace Gateways.Business.Contracts.Services;
 
-public interface IUseCase<TEntity> : IQueryable<TEntity>, IDisposable where TEntity : class
+public interface IService<TEntity> : IQueryable<TEntity>, IDisposable where TEntity : class
 {
     void Add(TEntity entity);
     void Update(TEntity entity);

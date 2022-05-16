@@ -1,7 +1,7 @@
 ﻿using Gateways.Business.Contracts;
-using Gateways.Business.Contracts.UseCases;
+using Gateways.Business.Contracts.Services;
 using Gateways.Business.Implementations.Repositories;
-using Gateways.Business.Implementations.UseCases;
+using Gateways.Business.Implementations.Services;
 using Gateways.Data.Implementations;
 using Gateways.Data.Implementations.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -23,9 +23,9 @@ namespace Gateways.Business.Bootstrapper
 
             services.AddScoped<IObjectContext, ObjectContext>();
 
-            // UseCases
-            services.AddScoped<IDeviceUseCase, DeviceUseCase>();
-            services.AddScoped<IGatewayUseCase, GatewayUseCase>();
+            // Services
+            services.AddScoped<IDeviceService, DeviceService>();
+            services.AddScoped<IGatewayService, GatewayService>();
 
             // Repositories
             services.AddScoped<IDeviceRepository, DeviceRepository>();

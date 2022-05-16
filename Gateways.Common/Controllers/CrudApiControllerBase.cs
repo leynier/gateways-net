@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Gateways.Common.Errors;
 using Gateways.Business.Contracts.Entities;
-using Gateways.Business.Contracts.UseCases;
+using Gateways.Business.Contracts.Services;
 using Gateways.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,21 +11,21 @@ namespace Gateways.Common.Controllers;
 public class CrudApiControllerBase<TEntity, TGet, TGetDetails, TPost, TPut, TKey> : ApiControllerBase where TEntity : Entity<TKey>
 {
     private readonly Func<IQueryable<TEntity>, IQueryable<TEntity>>? includer;
-    protected readonly IUseCase<TEntity> useCase;
+    protected readonly IService<TEntity> service;
 
     public CrudApiControllerBase(
-        IUseCase<TEntity> useCase,
+        IService<TEntity> service,
         IMapper mapper,
         Func<IQueryable<TEntity>, IQueryable<TEntity>>? includer = null) : base(mapper)
     {
         this.includer = includer;
-        this.useCase = useCase;
+        this.service = service;
     }
 
     [HttpGet]
     public virtual Response<IEnumerable<TGet>> GetAll()
     {
-        var models = useCase
+        var models = service
             .AsNoTrackingWithIdentityResolution()
             .ToList();
         return OkResponse<IEnumerable<TGet>>(models);
@@ -34,7 +34,7 @@ public class CrudApiControllerBase<TEntity, TGet, TGetDetails, TPost, TPut, TKey
     [HttpGet("{id}")]
     public virtual Response<TGetDetails> Get(TKey id)
     {
-        IQueryable<TEntity> query = useCase.AsNoTrackingWithIdentityResolution();
+        IQueryable<TEntity> query = service.AsNoTrackingWithIdentityResolution();
         if (includer != null)
             query = includer(query);
         var model = query.FirstOrDefault(g => Equals(g.Id, id));
@@ -47,30 +47,30 @@ public class CrudApiControllerBase<TEntity, TGet, TGetDetails, TPost, TPut, TKey
     public virtual Response<TGet> Post([FromBody] TPost model)
     {
         var entity = mapper.Map<TEntity>(model);
-        useCase.Add(entity);
-        useCase.Commit();
+        service.Add(entity);
+        service.Commit();
         return OkResponse<TGet>(entity);
     }
 
     [HttpPut("{id}")]
     public virtual Response<TGet> Put(TKey id, [FromBody] TPut model)
     {
-        var entity = useCase.FirstOrDefault(g => Equals(g.Id, id));
+        var entity = service.FirstOrDefault(g => Equals(g.Id, id));
         if (entity == null)
             throw new NotFoundError();
         mapper.Map(model, entity);
-        useCase.Commit();
+        service.Commit();
         return OkResponse<TGet>(entity);
     }
 
     [HttpDelete("{id}")]
     public virtual Response<TGet> Delete(TKey id)
     {
-        var entity = useCase.FirstOrDefault(g => Equals(g.Id, id));
+        var entity = service.FirstOrDefault(g => Equals(g.Id, id));
         if (entity == null)
             throw new NotFoundError();
-        useCase.Remove(entity);
-        useCase.Commit();
+        service.Remove(entity);
+        service.Commit();
         return OkResponse<TGet>(entity);
     }
 }
