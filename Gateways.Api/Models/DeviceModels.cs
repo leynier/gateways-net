@@ -8,8 +8,6 @@ public class DeviceBaseModel
     [Required]
     public string Vendor { get; set; } = default!;
     [Required]
-    public DateTime DateCreated { get; set; } = DateTime.UtcNow;
-    [Required]
     public DeviceStatus Status { get; set; } = DeviceStatus.Offline;
 
     [Required]
@@ -19,6 +17,7 @@ public class DeviceBaseModel
 public class DeviceGetModel : DeviceBaseModel
 {
     public int Id { get; set; } = default!;
+    public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 }
 
 public class DeviceGetDetailsModel : DeviceGetModel
