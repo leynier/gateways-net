@@ -8,17 +8,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Gateways.Common.Controllers;
 
-public class CrudApiControllerBase<TEntity, TGet, TPost, TPut> : ApiControllerBase where TEntity : Entity
+public class CrudApiControllerBase<TEntity, TGet, TGetDetails, TPost, TPut, TKey> : ApiControllerBase where TEntity : Entity<TKey>
 {
-    private readonly IUseCase<TEntity> useCase;
+    private readonly Func<IQueryable<TEntity>, IQueryable<TEntity>>? includer;
+    protected readonly IUseCase<TEntity> useCase;
 
-    public CrudApiControllerBase(IUseCase<TEntity> useCase, IMapper mapper) : base(mapper)
+    public CrudApiControllerBase(
+        IUseCase<TEntity> useCase,
+        IMapper mapper,
+        Func<IQueryable<TEntity>, IQueryable<TEntity>>? includer = null) : base(mapper)
     {
+        this.includer = includer;
         this.useCase = useCase;
     }
 
     [HttpGet]
-    public Response<IEnumerable<TGet>> GetAll()
+    public virtual Response<IEnumerable<TGet>> GetAll()
     {
         var models = useCase
             .AsNoTrackingWithIdentityResolution()
@@ -27,18 +32,19 @@ public class CrudApiControllerBase<TEntity, TGet, TPost, TPut> : ApiControllerBa
     }
 
     [HttpGet("{id}")]
-    public Response<TGet> Get(string id)
+    public virtual Response<TGetDetails> Get(TKey id)
     {
-        var model = useCase
-            .AsNoTrackingWithIdentityResolution()
-            .FirstOrDefault(g => g.Id == id);
+        IQueryable<TEntity> query = useCase.AsNoTrackingWithIdentityResolution();
+        if (includer != null)
+            query = includer(query);
+        var model = query.FirstOrDefault(g => Equals(g.Id, id));
         if (model == null)
             throw new NotFoundError();
-        return OkResponse<TGet>(model);
+        return OkResponse<TGetDetails>(model);
     }
 
     [HttpPost]
-    public Response<TGet> Post([FromBody] TPost model)
+    public virtual Response<TGet> Post([FromBody] TPost model)
     {
         var entity = mapper.Map<TEntity>(model);
         useCase.Add(entity);
@@ -47,9 +53,9 @@ public class CrudApiControllerBase<TEntity, TGet, TPost, TPut> : ApiControllerBa
     }
 
     [HttpPut("{id}")]
-    public Response<TGet> Put(string id, [FromBody] TPut model)
+    public virtual Response<TGet> Put(TKey id, [FromBody] TPut model)
     {
-        var entity = useCase.FirstOrDefault(g => g.Id == id);
+        var entity = useCase.FirstOrDefault(g => Equals(g.Id, id));
         if (entity == null)
             throw new NotFoundError();
         mapper.Map(model, entity);
@@ -58,9 +64,9 @@ public class CrudApiControllerBase<TEntity, TGet, TPost, TPut> : ApiControllerBa
     }
 
     [HttpDelete("{id}")]
-    public Response<TGet> Delete(string id)
+    public virtual Response<TGet> Delete(TKey id)
     {
-        var entity = useCase.FirstOrDefault(g => g.Id == id);
+        var entity = useCase.FirstOrDefault(g => Equals(g.Id, id));
         if (entity == null)
             throw new NotFoundError();
         useCase.Remove(entity);

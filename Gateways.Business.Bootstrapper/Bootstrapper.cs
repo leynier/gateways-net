@@ -22,11 +22,13 @@ namespace Gateways.Business.Bootstrapper
             });
 
             services.AddScoped<IObjectContext, ObjectContext>();
-            
+
             // UseCases
+            services.AddScoped<IDeviceUseCase, DeviceUseCase>();
             services.AddScoped<IGatewayUseCase, GatewayUseCase>();
 
             // Repositories
+            services.AddScoped<IDeviceRepository, DeviceRepository>();
             services.AddScoped<IGatewayRepository, GatewayRepository>();
         }
     }

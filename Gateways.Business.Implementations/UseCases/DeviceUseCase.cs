@@ -4,10 +4,9 @@ using Gateways.Business.Implementations.Repositories;
 
 namespace Gateways.Business.Implementations.UseCases;
 
-public class GatewayUseCase : BaseUseCase<Gateway>, IGatewayUseCase
+public class DeviceUseCase : BaseUseCase<Device>, IDeviceUseCase
 {
-    public GatewayUseCase(IGatewayRepository repository) : base(repository)
+    public DeviceUseCase(IDeviceRepository repository) : base(repository)
     {
-
     }
 }

@@ -6,7 +6,13 @@ namespace Gateways.Data.Implementations;
 
 public class ObjectContext : DbContext, IObjectContext
 {
+    #region Constructors
+
     public ObjectContext(DbContextOptions<ObjectContext> options) : base(options) { }
+
+    #endregion
+
+    #region Methods and Properties
 
     IQueryable<TEntity> IObjectContext.Query<TEntity>() => Set<TEntity>();
 
@@ -20,5 +26,12 @@ public class ObjectContext : DbContext, IObjectContext
 
     Task IObjectContext.CommitAsync() => SaveChangesAsync();
 
+    #endregion
+
+    #region DbSets
+
+    public DbSet<Device> Devices { get; set; } = default!;
     public DbSet<Gateway> Gateways { get; set; } = default!;
+
+    #endregion
 }

@@ -9,6 +9,7 @@ public class GatewayProfile : Profile
     public GatewayProfile()
     {
         CreateMap<Gateway, GatewayGetModel>();
+        CreateMap<Gateway, GatewayGetDetailsModel>();
         CreateMap<GatewayPostModel, Gateway>();
         CreateMap<GatewayPutModel, Gateway>();
     }
