@@ -20,5 +20,5 @@ public class ObjectContext : DbContext, IObjectContext
 
     Task IObjectContext.CommitAsync() => SaveChangesAsync();
 
-    public DbSet<Gateway> Gateways { get; set; }
+    public DbSet<Gateway> Gateways { get; set; } = default!;
 }
