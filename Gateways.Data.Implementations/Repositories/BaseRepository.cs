@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Gateways.Data.Implementations.Repositories;
 
-public class BaseRepository<TEntity, TKey> : IRepository<TEntity> where TEntity : Entity<TKey>
+public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
 {
     public BaseRepository(IObjectContext context)
     {
@@ -37,11 +37,4 @@ public class BaseRepository<TEntity, TKey> : IRepository<TEntity> where TEntity 
     public void Update(TEntity entity) => Context.Update(entity);
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-}
-
-public class BaseRepository<TEntity> : BaseRepository<TEntity, string> where TEntity : Entity
-{
-    public BaseRepository(IObjectContext context) : base(context)
-    {
-    }
 }
