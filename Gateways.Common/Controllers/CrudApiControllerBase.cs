@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Gateways.Common.Controllers;
 
-public class CrudApiControllerBase<TEntity, TGet, TGetDetails, TPost, TPut, TKey> : ApiControllerBase where TEntity : Entity<TKey>
+public class CrudApiControllerBase<TEntity, TGet, TGetDetails, TPost, TPut, TKey> : ApiControllerBase where TEntity : class, IEntity<TKey>
 {
     private readonly Func<IQueryable<TEntity>, IQueryable<TEntity>>? includer;
     protected readonly IService<TEntity> service;

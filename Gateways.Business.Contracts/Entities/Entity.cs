@@ -1,6 +1,8 @@
-﻿namespace Gateways.Business.Contracts.Entities;
+﻿using Gateways.Business.Contracts.Contracts;
 
-public class Entity<T>
+namespace Gateways.Business.Contracts.Entities;
+
+public class Entity<T> : IEntity<T>
 {
     public virtual T Id { get; set; } = default!;
 }
