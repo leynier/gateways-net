@@ -52,12 +52,12 @@ namespace Gateways.Business.Bootstrapper
                 return;
             var impl = impls.First();
             services.AddScoped(type, impl);
-            var parameterTpes = impl
+            var parameterTypes = impl
                 .GetConstructors()
                 .SelectMany(t => t.GetParameters())
                 .Select(p => p.ParameterType)
                 .ToList();
-            foreach (var parameterType in parameterTpes)
+            foreach (var parameterType in parameterTypes)
                 BootType(services, parameterType);
         }
     }
