@@ -1,10 +1,4 @@
-﻿using Gateways.Business.Contracts;
-using Gateways.Business.Contracts.Entities;
-using Gateways.Business.Contracts.Services;
-using Gateways.Business.Implementations.Repositories;
-using Gateways.Business.Implementations.Services;
-using Gateways.Data.Implementations;
-using Gateways.Data.Implementations.Repositories;
+﻿using Gateways.Data.Implementations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,7 +1,6 @@
-﻿namespace Gateways.Api.Helpers
+﻿namespace Gateways.Api.Helpers;
+
+public static class Configs
 {
-    public static class Configs
-    {
-        public const string MaxNumberOfDevicesPerGateway = "MaxNumberOfDevicesPerGateway";
-    }
+    public const string MaxNumberOfDevicesPerGateway = "MaxNumberOfDevicesPerGateway";
 }

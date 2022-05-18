@@ -1,6 +1,4 @@
-﻿using Gateways.Business.Contracts.Entities;
-
-namespace Gateways.Business.Contracts;
+﻿namespace Gateways.Business.Contracts;
 
 public interface IRepository<TEntity> : IQueryable<TEntity>, IDisposable where TEntity : class
 {

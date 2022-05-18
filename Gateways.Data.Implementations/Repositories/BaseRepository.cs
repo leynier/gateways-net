@@ -1,5 +1,4 @@
 ﻿using Gateways.Business.Contracts;
-using Gateways.Business.Contracts.Entities;
 using System.Collections;
 using System.Linq.Expressions;
 
