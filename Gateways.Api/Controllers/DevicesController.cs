@@ -15,10 +15,10 @@ public class DevicesController : CrudApiControllerBase<Device, DeviceGetModel, D
 {
     private readonly int maxNumberOfDevicesPerGateway;
 
-    public DevicesController(IDeviceService service, IMapper mapper, IConfiguration configuration)
-        : base(service, mapper, q => q.Include(d => d.Gateway))
+    public DevicesController(IDeviceService service, IMapper mapper, IConfiguration config)
+        : base(service, mapper, q => q.Include(d => d.Gateway), q => q.OrderBy(d => d.Vendor))
     {
-        maxNumberOfDevicesPerGateway = int.Parse(configuration[Configs.MaxNumberOfDevicesPerGateway]);
+        maxNumberOfDevicesPerGateway = config.GetValue(Configs.MaxNumberOfDevicesPerGateway, 10);
     }
 
     [HttpPost]

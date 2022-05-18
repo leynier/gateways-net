@@ -10,7 +10,7 @@ namespace Gateways.Api.Controllers;
 public class GatewaysController : CrudApiControllerBase<Gateway, GatewayGetModel, GatewayGetDetailsModel, GatewayPostModel, GatewayPutModel, string>
 {
     public GatewaysController(IGatewayService service, IMapper mapper)
-        : base(service, mapper, q => q.Include(g => g.Devices))
+        : base(service, mapper, q => q.Include(g => g.Devices), q => q.OrderBy(g => g.Name))
     {
     }
 }

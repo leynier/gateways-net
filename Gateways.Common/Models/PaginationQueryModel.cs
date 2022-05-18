@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Gateways.Common.Models;
 
-public class PaginationQueryModel<T>
+public class PaginationQueryModel
 {
-    [FromQuery(Name = "key")]
-    public T? Key { get; set; } = default;
+    [Min(0)]
+    [FromQuery(Name = "page")]
+    public int Page { get; set; } = default;
     [Min(1)]
-    [FromQuery(Name = "limit")]
-    public int Limit { get; set; } = 10;
+    [FromQuery(Name = "pageSize")]
+    public int PageSize { get; set; } = 10;
 }

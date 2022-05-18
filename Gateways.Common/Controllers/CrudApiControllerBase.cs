@@ -11,24 +11,32 @@ namespace Gateways.Common.Controllers;
 public class CrudApiControllerBase<TEntity, TGet, TGetDetails, TPost, TPut, TKey> : ApiControllerBase where TEntity : class, IEntity<TKey>
 {
     private readonly Func<IQueryable<TEntity>, IQueryable<TEntity>>? includer;
+    private readonly Func<IQueryable<TEntity>, IQueryable<TEntity>>? order;
     protected readonly IService<TEntity> service;
 
     public CrudApiControllerBase(
         IService<TEntity> service,
         IMapper mapper,
-        Func<IQueryable<TEntity>, IQueryable<TEntity>>? includer = null) : base(mapper)
+        Func<IQueryable<TEntity>, IQueryable<TEntity>>? includer = null,
+        Func<IQueryable<TEntity>, IQueryable<TEntity>>? order = null) : base(mapper)
     {
         this.includer = includer;
+        this.order = order;
         this.service = service;
     }
 
     [HttpGet]
-    public virtual Response<IEnumerable<TGet>> GetAll()
+    public virtual PaginatedResponse<IEnumerable<TGet>> GetAll([FromQuery] PaginationQueryModel pagination)
     {
-        var models = service
-            .AsNoTrackingWithIdentityResolution()
-            .ToList();
-        return OkResponse<IEnumerable<TGet>>(models);
+        var skip = pagination.Page * pagination.PageSize;
+        var take = pagination.PageSize;
+        var query = service.AsNoTrackingWithIdentityResolution();
+        if (order != null)
+            query = order(query);
+        var models = query.Skip(skip).Take(pagination.PageSize).ToList();
+        var hasPrevious = skip > 0;
+        var hasNext = models.Count == pagination.PageSize && query.Skip(skip + take).Any();
+        return OkResponse<IEnumerable<TGet>>(models, hasPrevious, hasNext);
     }
 
     [HttpGet("{id}")]
