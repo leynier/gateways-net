@@ -27,8 +27,6 @@ public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : clas
 
     public Task CommitAsync() => Context.CommitAsync();
 
-    public virtual void Dispose() { }
-
     public IEnumerator<TEntity> GetEnumerator() => Context.Query<TEntity>().GetEnumerator();
 
     public void Remove(TEntity entity) => Context.Remove(entity);

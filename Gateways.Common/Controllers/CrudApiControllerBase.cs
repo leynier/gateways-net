@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Gateways.Common.Errors;
-using Gateways.Business.Contracts.Entities;
+using Gateways.Business.Contracts.Contracts;
 using Gateways.Business.Contracts.Services;
+using Gateways.Common.Errors;
 using Gateways.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

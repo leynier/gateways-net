@@ -20,8 +20,6 @@ public class BaseService<TEntity> : IService<TEntity> where TEntity : class
 
     public IQueryProvider Provider => BaseRepository.Provider;
 
-    public void Dispose() => BaseRepository.Dispose();
-
     public IEnumerator<TEntity> GetEnumerator() => BaseRepository.GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

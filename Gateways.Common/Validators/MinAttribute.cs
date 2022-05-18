@@ -12,7 +12,7 @@ public class MinAttribute : ValidationAttribute
     {
         try
         {
-            if (value != null && value is int && MinimumValue > (int)value)
+            if (value != null && value is int valueInt && MinimumValue > valueInt)
             {
                 return new ValidationResult($"Value must be greater than {MinimumValue}");
             }
