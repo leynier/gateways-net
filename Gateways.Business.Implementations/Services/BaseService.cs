@@ -1,7 +1,5 @@
 ﻿using Gateways.Business.Contracts;
 using Gateways.Business.Contracts.Services;
-using System.Collections;
-using System.Linq.Expressions;
 
 namespace Gateways.Business.Implementations.Services;
 
@@ -13,17 +11,9 @@ public class BaseService<TEntity> : IService<TEntity> where TEntity : class
     }
 
     protected IRepository<TEntity> BaseRepository { get; }
-
-    public Type ElementType => BaseRepository.ElementType;
-
-    public Expression Expression => BaseRepository.Expression;
-
-    public IQueryProvider Provider => BaseRepository.Provider;
-
-    public IEnumerator<TEntity> GetEnumerator() => BaseRepository.GetEnumerator();
-
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
+    
+    public IQueryable<TEntity> Query() => BaseRepository.Query();
+    
     public void Add(TEntity entity) => BaseRepository.Add(entity);
 
     public void Update(TEntity entity) => BaseRepository.Update(entity);
@@ -33,4 +23,5 @@ public class BaseService<TEntity> : IService<TEntity> where TEntity : class
     public void Commit() => BaseRepository.Commit();
 
     public Task CommitAsync() => BaseRepository.CommitAsync();
+
 }

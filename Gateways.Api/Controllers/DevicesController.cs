@@ -24,7 +24,7 @@ public class DevicesController : CrudApiControllerBase<Device, DeviceGetModel, D
     [HttpPost]
     public override Response<DeviceGetModel> Post([FromBody] DevicePostModel model)
     {
-        var count = service.Where(g => g.GatewayId == model.GatewayId).Count();
+        var count = service.Query().Where(g => g.GatewayId == model.GatewayId).Count();
         if (count >= maxNumberOfDevicesPerGateway)
             throw new BadRequestError("Maximum number of devices reached for gateway");
         return base.Post(model);
@@ -34,6 +34,7 @@ public class DevicesController : CrudApiControllerBase<Device, DeviceGetModel, D
     public override Response<DeviceGetModel> Put(int id, [FromBody] DevicePutModel model)
     {
         var gatewayId = service
+            .Query()
             .Where(g => Equals(g.Id, id))
             .Select(g => g.GatewayId)
             .FirstOrDefault();
@@ -41,7 +42,7 @@ public class DevicesController : CrudApiControllerBase<Device, DeviceGetModel, D
             throw new NotFoundError();
         if (gatewayId != model.GatewayId)
         {
-            var count = service.Where(g => g.GatewayId == model.GatewayId).Count();
+            var count = service.Query().Where(g => g.GatewayId == model.GatewayId).Count();
             if (count >= maxNumberOfDevicesPerGateway)
                 throw new BadRequestError("Maximum number of devices reached for gateway");
         }

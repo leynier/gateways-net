@@ -1,8 +1,9 @@
 ﻿namespace Gateways.Business.Contracts;
 
-public interface IRepository<TEntity> : IQueryable<TEntity> where TEntity : class
+public interface IRepository<TEntity> where TEntity : class
 {
     IObjectContext Context { get; }
+    IQueryable<TEntity> Query();
     void Add(TEntity entity);
     void Update(TEntity entity);
     void Remove(TEntity entity);

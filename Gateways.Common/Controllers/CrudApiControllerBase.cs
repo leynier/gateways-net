@@ -30,7 +30,7 @@ public class CrudApiControllerBase<TEntity, TGet, TGetDetails, TPost, TPut, TKey
     {
         var skip = pagination.Page * pagination.PageSize;
         var take = pagination.PageSize;
-        var query = service.AsNoTrackingWithIdentityResolution();
+        var query = service.Query().AsNoTrackingWithIdentityResolution();
         if (order != null)
             query = order(query);
         var models = query.Skip(skip).Take(pagination.PageSize).ToList();
@@ -42,7 +42,7 @@ public class CrudApiControllerBase<TEntity, TGet, TGetDetails, TPost, TPut, TKey
     [HttpGet("{id}")]
     public virtual Response<TGetDetails> Get(TKey id)
     {
-        IQueryable<TEntity> query = service.AsNoTrackingWithIdentityResolution();
+        IQueryable<TEntity> query = service.Query().AsNoTrackingWithIdentityResolution();
         if (includer != null)
             query = includer(query);
         var model = query.FirstOrDefault(g => Equals(g.Id, id));
@@ -63,7 +63,7 @@ public class CrudApiControllerBase<TEntity, TGet, TGetDetails, TPost, TPut, TKey
     [HttpPut("{id}")]
     public virtual Response<TGet> Put(TKey id, [FromBody] TPut model)
     {
-        var entity = service.FirstOrDefault(g => Equals(g.Id, id));
+        var entity = service.Query().FirstOrDefault(g => Equals(g.Id, id));
         if (entity == null)
             throw new NotFoundError();
         mapper.Map(model, entity);
@@ -74,7 +74,7 @@ public class CrudApiControllerBase<TEntity, TGet, TGetDetails, TPost, TPut, TKey
     [HttpDelete("{id}")]
     public virtual Response<TGet> Delete(TKey id)
     {
-        var entity = service.FirstOrDefault(g => Equals(g.Id, id));
+        var entity = service.Query().FirstOrDefault(g => Equals(g.Id, id));
         if (entity == null)
             throw new NotFoundError();
         service.Remove(entity);
