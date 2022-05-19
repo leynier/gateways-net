@@ -26,7 +26,7 @@ public class CrudApiControllerBase<TEntity, TGet, TGetDetails, TPost, TPut, TKey
     }
 
     [HttpGet]
-    public virtual PaginatedResponse<IEnumerable<TGet>> GetAll([FromQuery] PaginationQueryModel pagination)
+    public virtual PaginatedResponse<TGet> GetAll([FromQuery] PaginationQueryModel pagination)
     {
         var skip = pagination.Page * pagination.PageSize;
         var take = pagination.PageSize;
@@ -36,7 +36,7 @@ public class CrudApiControllerBase<TEntity, TGet, TGetDetails, TPost, TPut, TKey
         var models = query.Skip(skip).Take(pagination.PageSize).ToList();
         var hasPrevious = skip > 0;
         var hasNext = models.Count == pagination.PageSize && query.Skip(skip + take).Any();
-        return OkResponse<IEnumerable<TGet>>(models, hasPrevious, hasNext);
+        return OkResponse<TGet>(models, hasPrevious, hasNext);
     }
 
     [HttpGet("{id}")]
