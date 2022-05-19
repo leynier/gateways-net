@@ -67,6 +67,7 @@ public class CrudApiControllerBase<TEntity, TGet, TGetDetails, TPost, TPut, TKey
         if (entity == null)
             throw new NotFoundError();
         mapper.Map(model, entity);
+        service.Update(entity);
         service.Commit();
         return OkResponse<TGet>(entity);
     }
