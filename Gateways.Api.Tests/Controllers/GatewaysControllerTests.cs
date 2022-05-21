@@ -24,16 +24,16 @@ public class GatewaysControllerTests
 
     private IQueryable<Gateway> GetQueryableWithData => new[]
         {
-            new Gateway { Name = "Gateway 1" },
-            new Gateway { Name = "Gateway 2" },
-            new Gateway { Name = "Gateway 3" },
-            new Gateway { Name = "Gateway 4" },
-            new Gateway { Name = "Gateway 5" },
-            new Gateway { Name = "Gateway 6" },
-            new Gateway { Name = "Gateway 7" },
-            new Gateway { Name = "Gateway 8" },
-            new Gateway { Name = "Gateway 9" },
-            new Gateway { Name = "Gateway 10" },
+            new Gateway { Name = "Gateway 1", IPv4 = "127.0.0.1" },
+            new Gateway { Name = "Gateway 2", IPv4 = "127.0.0.2" },
+            new Gateway { Name = "Gateway 3", IPv4 = "127.0.0.3" },
+            new Gateway { Name = "Gateway 4", IPv4 = "127.0.0.4" },
+            new Gateway { Name = "Gateway 5", IPv4 = "127.0.0.5" },
+            new Gateway { Name = "Gateway 6", IPv4 = "127.0.0.6" },
+            new Gateway { Name = "Gateway 7", IPv4 = "127.0.0.7" },
+            new Gateway { Name = "Gateway 8", IPv4 = "127.0.0.8" },
+            new Gateway { Name = "Gateway 9", IPv4 = "127.0.0.9" },
+            new Gateway { Name = "Gateway 10", IPv4 = "127.0.0.10" },
         }.AsQueryable();
 
     [Fact]
@@ -186,7 +186,11 @@ public class GatewaysControllerTests
         gatewayService.Setup(x => x.Query()).Returns(gatewayQueryable);
 
         // Act
-        var result = Controller.Post(new GatewayPostModel { Name = "New Name" });
+        var result = Controller.Post(new GatewayPostModel
+        {
+            Name = "New Name",
+            IPv4 = "127.0.0.1",
+        });
 
         // Assert
         Assert.Equal(200, result.StatusCode);
