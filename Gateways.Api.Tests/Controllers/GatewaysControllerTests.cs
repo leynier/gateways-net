@@ -22,7 +22,7 @@ public class GatewaysControllerTests
 
     private GatewaysController Controller => new(gatewayService.Object, mapper);
 
-    private IQueryable<Gateway> GetQueryableWithData => new[]
+    private static IQueryable<Gateway> GetQueryableWithData => new[]
         {
             new Gateway { Name = "Gateway 1", IPv4 = "127.0.0.1" },
             new Gateway { Name = "Gateway 2", IPv4 = "127.0.0.2" },

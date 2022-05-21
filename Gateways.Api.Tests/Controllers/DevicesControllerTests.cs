@@ -26,7 +26,7 @@ public class DevicesControllerTests
 
     private DevicesController Controller => new(deviceService.Object, mapper, config);
 
-    private IQueryable<Device> GetQueryableWithData(Gateway gateway, int count)
+    private static IQueryable<Device> GetQueryableWithData(Gateway gateway, int count)
     {
         var devices = new List<Device>();
         for (int i = 0; i < count; i++)
