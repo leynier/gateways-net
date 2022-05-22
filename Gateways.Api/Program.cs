@@ -43,3 +43,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+// This is required for test projects with WebApplicationFactory 
+// https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests
+public partial class Program { }
