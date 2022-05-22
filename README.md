@@ -1,5 +1,14 @@
 # Gateways
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Tests](https://github.com/leynier/gateways-net/actions/workflows/tests.yaml/badge.svg)](https://github.com/leynier/gateways-net/actions/workflows/tests.yaml)
+[![Last commit](https://img.shields.io/github/last-commit/leynier/gateways-net.svg?style=flat)](https://github.com/leynier/gateways-net/commits)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/leynier/gateways-net)](https://github.com/leynier/gateways-net/commits)
+[![Github Stars](https://img.shields.io/github/stars/leynier/gateways-net?style=flat&logo=github)](https://github.com/leynier/gateways-net/stargazers)
+[![Github Forks](https://img.shields.io/github/forks/leynier/gateways-net?style=flat&logo=github)](https://github.com/leynier/gateways-net/network/members)
+[![Github Watchers](https://img.shields.io/github/watchers/leynier/gateways-net?style=flat&logo=github)](https://github.com/leynier/gateways-net)
+[![GitHub contributors](https://img.shields.io/github/contributors/leynier/gateways-net)](https://github.com/leynier/gateways-net/graphs/contributors)
+
 This project is for a technical interview at a company called [Musala Soft](https://www.musala.com/).
 
 ## Description
