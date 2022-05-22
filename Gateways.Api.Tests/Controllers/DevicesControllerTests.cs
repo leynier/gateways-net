@@ -15,16 +15,18 @@ public class DevicesControllerTests
 {
     private readonly IConfiguration config;
     private readonly Mock<IDeviceService> deviceService;
+    private readonly Mock<IGatewayService> gatewayService;
     private readonly IMapper mapper;
 
     public DevicesControllerTests()
     {
         config = new ConfigurationBuilder().Build();
         deviceService = new Mock<IDeviceService>();
+        gatewayService = new Mock<IGatewayService>();
         mapper = AutoMapperFactory.CreateMapper();
     }
 
-    private DevicesController Controller => new(deviceService.Object, mapper, config);
+    private DevicesController Controller => new(gatewayService.Object, deviceService.Object, mapper, config);
 
     private static IQueryable<Device> GetQueryableWithData(Gateway gateway, int count)
     {
@@ -214,11 +216,15 @@ public class DevicesControllerTests
         var deviceQueryable = GetQueryableWithData(gateway, 5);
         deviceService.Reset();
         deviceService.Setup(x => x.Query()).Returns(deviceQueryable);
+        var gatewayQueryable = new[] { gateway }.AsQueryable();
+        gatewayService.Reset();
+        gatewayService.Setup(x => x.Query()).Returns(gatewayQueryable);
 
         // Act
         var result = Controller.Put(deviceQueryable.First().Id, new DevicePutModel
         {
             Vendor = "New Vendor",
+            GatewayId = gateway.Id
         });
 
         // Assert
@@ -237,11 +243,15 @@ public class DevicesControllerTests
         var deviceQueryable = GetQueryableWithData(gateway, 5);
         deviceService.Reset();
         deviceService.Setup(x => x.Query()).Returns(deviceQueryable);
+        var gatewayQueryable = new[] { gateway }.AsQueryable();
+        gatewayService.Reset();
+        gatewayService.Setup(x => x.Query()).Returns(gatewayQueryable);
 
         // Act
         var result = Controller.Post(new DevicePostModel
         {
             Vendor = "New Vendor",
+            GatewayId = gateway.Id
         });
 
         // Assert
