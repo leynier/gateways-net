@@ -14,11 +14,17 @@ namespace Gateways.Api.Controllers;
 public class DevicesController : CrudApiControllerBase<Device, DeviceGetModel, DeviceGetDetailsModel, DevicePostModel, DevicePutModel, int>
 {
     private readonly int maxNumberOfDevicesPerGateway;
+    private readonly IGatewayService gatewayService;
 
-    public DevicesController(IDeviceService service, IMapper mapper, IConfiguration config)
+    public DevicesController(
+        IGatewayService gatewayService,
+        IDeviceService service,
+        IMapper mapper,
+        IConfiguration config)
         : base(service, mapper, q => q.Include(d => d.Gateway), q => q.OrderBy(d => d.Vendor))
     {
         maxNumberOfDevicesPerGateway = config.GetValue(Configs.MaxNumberOfDevicesPerGateway, 10);
+        this.gatewayService = gatewayService;
     }
 
     [HttpPost]
@@ -27,6 +33,9 @@ public class DevicesController : CrudApiControllerBase<Device, DeviceGetModel, D
         var count = service.Query().Where(g => g.GatewayId == model.GatewayId).Count();
         if (count >= maxNumberOfDevicesPerGateway)
             throw new BadRequestError("Maximum number of devices reached for gateway");
+        var existingGateway = gatewayService.Query().Any(g => g.Id == model.GatewayId);
+        if (!existingGateway)
+            throw new BadRequestError("Gateway does not exist");
         return base.Post(model);
     }
 
@@ -45,6 +54,9 @@ public class DevicesController : CrudApiControllerBase<Device, DeviceGetModel, D
             var count = service.Query().Where(g => g.GatewayId == model.GatewayId).Count();
             if (count >= maxNumberOfDevicesPerGateway)
                 throw new BadRequestError("Maximum number of devices reached for gateway");
+            var existingGateway = gatewayService.Query().Any(g => g.Id == model.GatewayId);
+            if (!existingGateway)
+                throw new BadRequestError("Gateway does not exist");
         }
         return base.Put(id, model);
     }
