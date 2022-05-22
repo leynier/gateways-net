@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gateways.Common", "Gateways
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gateways.Api.Tests", "Gateways.Api.Tests\Gateways.Api.Tests.csproj", "{5B2334F1-1320-45D0-B1CA-744CA697A809}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateways.Api.IntegrationTests", "Gateways.Api.IntegrationTests\Gateways.Api.IntegrationTests.csproj", "{B1846B81-55A9-46A6-A012-C71CDC57420F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gateways.Api.IntegrationTests", "Gateways.Api.IntegrationTests\Gateways.Api.IntegrationTests.csproj", "{B1846B81-55A9-46A6-A012-C71CDC57420F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
