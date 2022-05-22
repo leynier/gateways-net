@@ -4,18 +4,8 @@ using System.Net;
 
 namespace Gateways.Api.IntegrationTests.Controllers;
 
-public class DevicesControllerTests
+public class DevicesControllerTests : BaseControllerTests
 {
-    private readonly HttpClient client;
-
-    public DevicesControllerTests()
-    {
-        var client = ClientFactory.CreateClient();
-        if (client == null)
-            throw new Exception("Client is null");
-        this.client = client;
-    }
-
     [Theory]
     [InlineData(-1, 1)]
     [InlineData(0, -1)]
