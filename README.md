@@ -19,7 +19,7 @@ Your task is to create a REST service (JSON/HTTP) for storing information about 
 
 This information must be stored in the database.
 
-When storing a gateway, any field marked as ìto be validatedî must be validated and an error returned if it is invalid.
+When storing a gateway, any field marked as ‚Äúto be validated‚Äù must be validated and an error returned if it is invalid.
 
 Also, no more that 10 peripheral devices are allowed for a gateway.
 
@@ -52,7 +52,7 @@ enough time.
 
 - Install .Net 6.0 (<https://dotnet.microsoft.com/en-us/download>)
 - Install Git (<https://git-scm.com/downloads>)
-- Clone the repository ()`git clone https://github.com/leynier/gateways-net.git`)
+- Clone the repository (`git clone https://github.com/leynier/gateways-net.git`)
 - Navigate to the root of the repository (`cd gateways-net`)
 - Install the project dependencies (`dotnet restore`)
 - Build the project (`dotnet build`)
